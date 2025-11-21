@@ -1,22 +1,497 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<main class="main">
-  <div class="content">
-    <h1>Welcome to TestDeployAngular!</h1>
-    <p>This is a starter project for Angular applications.</p>
-  </div>
-</main>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+  :root {
+    --bg-primary: #0a0e27;
+    --bg-secondary: #1a1f3a;
+    --bg-tertiary: #242d4a;
+    --accent-green: #00ff88;
+    --accent-blue: #00d4ff;
+    --accent-purple: #b41eff;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --border: #2a3f5f;
+  }
+
+  body {
+    font-family: 'Courier New', 'Courier', monospace;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    border-bottom: 2px solid var(--accent-green);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+  }
+
+  header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent-green);
+    text-shadow: 0 0 10px var(--accent-green);
+    letter-spacing: 2px;
+  }
+
+  .search-bar {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 30px;
+  }
+
+  .search-bar input {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--accent-blue);
+    color: var(--text-primary);
+    border-radius: 4px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+  }
+
+  .search-bar input:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+  }
+
+  .user-status {
+    color: var(--accent-green);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  /* Main Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .main-content {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+    margin: 30px auto;
+    min-height: calc(100vh - 200px);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+  }
+
+  .sidebar h3 {
+    color: var(--accent-blue);
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+
+  .sidebar ul {
+    list-style: none;
+  }
+
+  .sidebar li {
+    margin: 10px 0;
+  }
+
+  .sidebar a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 5px 10px;
+    border-left: 2px solid transparent;
+  }
+
+  .sidebar a:hover {
+    color: var(--accent-green);
+    border-left-color: var(--accent-green);
+    padding-left: 15px;
+    text-shadow: 0 0 5px var(--accent-green);
+  }
+
+  /* Content Area */
+  .content {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 40px;
+  }
+
+  .content h1 {
+    color: var(--accent-green);
+    margin-bottom: 10px;
+    font-size: 32px;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+    letter-spacing: 1px;
+  }
+
+  .breadcrumb {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 15px;
+  }
+
+  .breadcrumb a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--accent-green);
+  }
+
+  .breadcrumb span {
+    color: var(--text-secondary);
+    margin: 0 8px;
+  }
+
+  /* Content Sections */
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section h2 {
+    color: var(--accent-blue);
+    margin: 25px 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--accent-purple);
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+
+  .section h3 {
+    color: var(--accent-green);
+    margin: 15px 0 10px 0;
+    font-size: 16px;
+  }
+
+  .section p {
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    line-height: 1.8;
+  }
+
+  .code-block {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--accent-green);
+    border-radius: 4px;
+    padding: 15px;
+    margin: 15px 0;
+    overflow-x: auto;
+    font-size: 12px;
+    color: var(--accent-green);
+  }
+
+  .info-box {
+    background-color: var(--bg-tertiary);
+    border-left: 4px solid var(--accent-blue);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+
+  .info-box strong {
+    color: var(--accent-blue);
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+
+  table thead {
+    background-color: var(--bg-tertiary);
+  }
+
+  table th {
+    color: var(--accent-green);
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--accent-purple);
+    font-weight: bold;
+  }
+
+  table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+  }
+
+  table tbody tr:hover {
+    background-color: rgba(0, 255, 136, 0.05);
+  }
+
+  /* Tags */
+  .tags {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--accent-purple);
+    color: var(--accent-purple);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .tag:hover {
+    background-color: var(--accent-purple);
+    color: var(--bg-primary);
+    box-shadow: 0 0 10px rgba(180, 30, 255, 0.5);
+  }
+
+  /* Footer */
+  footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    padding: 20px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-top: 40px;
+  }
+
+  footer a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  footer a:hover {
+    color: var(--accent-green);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .main-content {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      position: static;
+    }
+
+    header .container {
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .search-bar {
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .content h1 {
+      font-size: 24px;
+    }
+  }
+</style>
+
+<div>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">⬢ CIPHER WIKI</div>
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar en la wiki...">
+      </div>
+      <div class="user-status">● CONECTADO</div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="main-content">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h3>📁 Categorías</h3>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#seguridad">Seguridad</a></li>
+          <li><a href="#criptografia">Criptografía</a></li>
+          <li><a href="#redes">Redes</a></li>
+          <li><a href="#privacidad">Privacidad</a></li>
+        </ul>
+
+        <h3>🔗 Enlaces Útiles</h3>
+        <ul>
+          <li><a href="#">Últimas Actualizaciones</a></li>
+          <li><a href="#">Contribuir</a></li>
+          <li><a href="#">Reportar Error</a></li>
+        </ul>
+
+        <h3>ℹ️ Información</h3>
+        <ul>
+          <li><a href="#">Acerca de</a></li>
+          <li><a href="#">Términos de Uso</a></li>
+          <li><a href="#">Privacidad</a></li>
+        </ul>
+      </aside>
+
+      <!-- Content Area -->
+      <main class="content">
+        <div class="breadcrumb">
+          <a href="#">Inicio</a>
+          <span>/</span>
+          <a href="#">Seguridad</a>
+          <span>/</span>
+          <span>Criptografía Moderna</span>
+        </div>
+
+        <h1>Criptografía Moderna</h1>
+
+        <div class="tags">
+          <span class="tag">Seguridad</span>
+          <span class="tag">Criptografía</span>
+          <span class="tag">RSA</span>
+          <span class="tag">Avanzado</span>
+        </div>
+
+        <div class="section">
+          <h2>Introducción</h2>
+          <p>
+            La criptografía moderna es la ciencia de proteger información mediante técnicas matemáticas avanzadas.
+            En la era digital actual, es fundamental para garantizar la confidencialidad, integridad y autenticidad
+            de los datos.
+          </p>
+        </div>
+
+        <div class="info-box">
+          <strong>⚠️ Nota:</strong> Este contenido es únicamente con fines educativos.
+          El uso indebido de criptografía puede violar leyes locales.
+        </div>
+
+        <div class="section">
+          <h2>Tipos de Criptografía</h2>
+
+          <h3>Criptografía Simétrica</h3>
+          <p>
+            Utiliza la misma clave para cifrar y descifrar. Ejemplos: AES, DES, Blowfish.
+          </p>
+
+          <div class="code-block">
+            AES-256-CBC (Advanced Encryption Standard)
+            Tamaño de clave: 256 bits
+            Bloques: 128 bits
+          </div>
+
+          <h3>Criptografía Asimétrica</h3>
+          <p>
+            Utiliza un par de claves: una pública y otra privada. Ejemplos: RSA, ECC, DSA.
+          </p>
+        </div>
+
+        <div class="section">
+          <h2>Comparativa de Algoritmos</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Algoritmo</th>
+                <th>Tipo</th>
+                <th>Seguridad</th>
+                <th>Velocidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>AES-256</td>
+                <td>Simétrica</td>
+                <td>Muy Alta</td>
+                <td>Rápida</td>
+              </tr>
+              <tr>
+                <td>RSA-4096</td>
+                <td>Asimétrica</td>
+                <td>Muy Alta</td>
+                <td>Lenta</td>
+              </tr>
+              <tr>
+                <td>ECC-521</td>
+                <td>Asimétrica</td>
+                <td>Muy Alta</td>
+                <td>Media</td>
+              </tr>
+              <tr>
+                <td>ChaCha20</td>
+                <td>Simétrica</td>
+                <td>Alta</td>
+                <td>Muy Rápida</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>Buenas Prácticas</h2>
+          <ul style="margin-left: 20px; color: var(--text-primary);">
+            <li>Usar siempre cifrado de extremo a extremo</li>
+            <li>Implementar rotación regular de claves</li>
+            <li>Validar la integridad de los datos mediante hashes</li>
+            <li>Proteger las claves privadas con máxima seguridad</li>
+            <li>Mantenerse actualizado con nuevos estándares</li>
+          </ul>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 CIPHER WIKI | Conocimiento Descentralizado | <a href="#">Contacto</a> | <a href="#">Donar</a></p>
+    <p style="margin-top: 10px; color: var(--accent-green); letter-spacing: 1px;">
+      ▓▓▓ CONECTADO A CIPHER NETWORK ▓▓▓
+    </p>
+  </footer>
+</div>
 
 
 <router-outlet />

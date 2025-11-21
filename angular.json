@@ -75,7 +75,15 @@
           "builder": "@angular/build:unit-test"
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "branch": "gh-pages",
+            "dir": "dist/test-deploy-angular/browser"
+          },
+          "configurations": {
+            "production": {},
+            "development": {}
+          }
         }
       }
     }
